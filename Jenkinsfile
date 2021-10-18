@@ -31,8 +31,10 @@ pipeline {
         }
         stage ('API Test') {
             steps {
+                dir('api-test') {                    
                 git 'https://github.com/cleristonwil/tasks-api-test'
                 bat 'mvn test'
+                }
             }
         }       
     }
