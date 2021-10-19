@@ -59,9 +59,8 @@ pipeline {
                 }
             }
         }
-        stage ('Connection and Deploy Prod')
+        stage ('Deploy Prod')
             steps {
-                script {
                     def remote = [:]
                     remote.name = 'docker-reg-priv'
                     remote.host = '192.168.51.19'
