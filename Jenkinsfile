@@ -23,7 +23,7 @@ pipeline {
         }
         stage ('Quality Gate') {
             steps {
-                sleep(15)
+                sleep(5)
                 timeout(time:1,unit:'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
@@ -51,26 +51,18 @@ pipeline {
                 }
             }
         }
-//        stage ('Functional Test') {
-//            steps {
-//                dir('functional-test') {
-//                git 'https://github.com/cleristonwil/tasks-functionall-tests'
-//                bat 'mvn test'
-//                }
-//            }
-//        }
-        stage ('Connection and Deploy Prod') {
+        stage ('Functional Test') {
             steps {
-                script {
-                    def remote = [:]
-                    remote.name = 'docker-reg-priv'
-                    remote.host = '192.168.51.19'
-                    remote.user = 'root'
-                    remote.password = '758812'
-                    remote.allowAnyHosts = true
-                    sshCommand remote: remote, command: "cd pasta-compartilhada/tasks-backend && ls -lt && /usr/bin/docker-compose build && /usr/bin/docker-compose up -d"
-                    //sshCommand remote: remote, command: "/usr/bin/docker-compose build && /usr/bin/docker-compose up -d"
+                dir('functional-test') {
+                git 'https://github.com/cleristonwil/tasks-functionall-tests'
+                bat 'mvn test'
                 }
+            }
+        }
+        stage ('Deploy Prod') {
+            steps {
+                bat 'docker-compose build'
+                bat 'docker-compose up'
             }
         }
     }
