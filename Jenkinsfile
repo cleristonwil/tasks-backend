@@ -59,10 +59,17 @@ pipeline {
                 }
             }
         }
-        stage ('Deploy Prod')
+        stage ('Connection and Deploy Prod') {
             steps {
-                    bat 'docker-compose build'
-                    bat 'docker-compose up'
+                script {
+                    def remote = [:]
+                    remote.name = 'docker-reg-priv'
+                    remote.host = '192.168.51.19'
+                    remote.user = 'root'
+                    remote.password = '758812'
+                    remote.allowAnyHosts = true
+                    sshCommand remote: remote, command: "/root/pasta-compartilhada/tasks-backend/docker-compose build"
+                    sshCommand remote: remote, command: "/root/pasta-compartilhada/tasks-backend/docker-compose up -d"
                 }
             }
         }
