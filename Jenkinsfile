@@ -61,7 +61,6 @@ pipeline {
         }
         stage ('Connection and Deploy Prod') {
             steps {
-                script {
                     def remote = [:]
                     remote.name = 'docker-reg-priv'
                     remote.host = '192.168.51.19'
@@ -70,7 +69,6 @@ pipeline {
                     remote.allowAnyHosts = true
                     sshCommand remote: remote, command: "cd /root/pasta-compartilhada/tasks-backend/"
                     sshCommand remote: remote, command: "/usr/bin/docker-compose build && /usr/bin/docker-compose up -d"
-                }
             }
         }
     }
