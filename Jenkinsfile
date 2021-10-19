@@ -59,8 +59,8 @@ pipeline {
                 }
             }
         }
-        stage ('Connect VM'){
-            steps{
+        stage ('Connect VM') {
+            steps {
                 def remote = [:]
                 remote.name = 'docker-reg-priv'
                 remote.host = '192.168.51.19'
@@ -69,8 +69,7 @@ pipeline {
                 remote.allowAnyHosts = true
                }
             }
-        }  
-        stage('Deploy Prod') {
+        stage ('Deploy Prod') {
                 sshCommand remote: remote, command: "/root/pasta-compartilhada/tasks-backend/docker-compose build"
                 sshCommand remote: remote, command: "/root/pasta-compartilhada/tasks-backend/docker compose up -d"
                 
