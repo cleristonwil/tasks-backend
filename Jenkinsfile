@@ -68,8 +68,8 @@ pipeline {
                     remote.user = 'root'
                     remote.password = '758812'
                     remote.allowAnyHosts = true
-                    sshCommand remote: remote, command: "cd /root/pasta-compartilhada/tasks-backend/"
-                    sshCommand remote: remote, command: "/usr/bin/docker-compose build && /usr/bin/docker-compose up -d"
+                    sshCommand remote: remote, command: "ls -lt"
+                    //sshCommand remote: remote, command: "/usr/bin/docker-compose build && /usr/bin/docker-compose up -d"
                 }
             }
         }
