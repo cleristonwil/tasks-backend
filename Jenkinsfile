@@ -59,5 +59,22 @@ pipeline {
                 }
             }
         }
+        stage ('Connect VM'){
+            steps{
+                def remote = [:]
+                remote.name = 'docker-reg-priv'
+                remote.host = '192.168.51.19'
+                remote.user = 'root'
+                remote.password = '758812'
+                remote.allowAnyHosts = true
+               }
+            }
+        }  
+        stage('Deploy Prod') {
+                sshCommand remote: remote, command: "/root/pasta-compartilhada/tasks-backend/docker-compose build"
+                sshCommand remote: remote, command: "/root/pasta-compartilhada/tasks-backend/docker compose up -d"
+                
+            }
+        }
     }     
 }
