@@ -51,14 +51,14 @@ pipeline {
                 }
             }
         }
- //       stage ('Functional Test') {
- //           steps {
- //               dir('functional-test') {
- //               git 'https://github.com/cleristonwil/tasks-functionall-tests'
- //               bat 'mvn test'
- //               }
- //           }
- //       }
+        stage ('Functional Test') {
+            steps {
+                dir('functional-test') {
+                git 'https://github.com/cleristonwil/tasks-functionall-tests'
+                bat 'mvn test'
+                }
+            }
+        }
         stage ('Deploy Prod') {
             steps {
                 bat 'docker-compose build'
